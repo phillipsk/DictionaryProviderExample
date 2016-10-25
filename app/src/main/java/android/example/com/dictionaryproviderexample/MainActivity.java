@@ -30,12 +30,23 @@ import android.support.v4.widget.SimpleCursorAdapter;
  */
 public class MainActivity extends ActionBarActivity {
 
+    private static final String[] COLUMNS_TO_BE_BOUND = new String[]{
+            Words.WORD,
+            Words.FREQUENCY,
+    };
+
+    private static final int[] LAYOUT_ITEMS_TO_FILL = new int[]{
+            android.R.id.text1,
+            android.R.id.text2
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Get the TextView which will be populated with the Dictionary ContentProvider data.
+        /* changed to a list view */
         ListView dictListView = (ListView) findViewById(R.id.dictionary_list_view);
 
         // Get the ContentResolver which will send a message to the ContentProvider
@@ -47,8 +58,14 @@ public class MainActivity extends ActionBarActivity {
         // -- YOUR CODE BELOW HERE -- //
 
         // Set the Adapter to fill the standard two_line_list_item layout with data from the Cursor.
-        SimpleCursorAdapter adapter = null;
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+                android.R.layout.two_line_list_item,
+                cursor,
+                COLUMNS_TO_BE_BOUND,
+                LAYOUT_ITEMS_TO_FILL,
+                0);
 
         // Don't forget to attach the adapter to the ListView
+        dictListView.setAdapter(adapter);
     }
 }
